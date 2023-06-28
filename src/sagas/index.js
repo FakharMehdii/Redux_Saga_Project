@@ -3,12 +3,11 @@ import { takeEvery, call, all, takeLatest, put } from 'redux-saga/effects';
 
 function* createTodoSaga(action) {
   try {
-    let response = yield call(axios.post, 'https://crudcrud.com/api/d830b33c752f4f52b7520389123dbe79/tasks', {name:action.payload}, {
+    let response = yield call(axios.post, 'https://crudcrud.com/api/708f509e6aee4ecb944e7e2c895118cd/tasks', {name:action.payload}, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
-    console.log(response)
     yield call(updateStore)
   } catch (error) {
     console.error(error);
@@ -17,9 +16,8 @@ function* createTodoSaga(action) {
 
 function* updateStore () {
     try{
-        const response = yield call(axios.get, 'https://crudcrud.com/api/d830b33c752f4f52b7520389123dbe79/tasks')
+        const response = yield call(axios.get, 'https://crudcrud.com/api/708f509e6aee4ecb944e7e2c895118cd/tasks')
     yield put({type: 'ADD_TODO_STORE', payload:response.data})
-    console.log(response.data);
     } catch (error) {
         console.error(error);
     }
@@ -28,9 +26,8 @@ function* updateStore () {
 function * removeTodoSaga(action)
 {
     try{
-        const endpoint =  'https://crudcrud.com/api/d830b33c752f4f52b7520389123dbe79/tasks/';
+        const endpoint =  'https://crudcrud.com/api/708f509e6aee4ecb944e7e2c895118cd/tasks/';
         const response = yield call (axios.delete,  endpoint.concat(action.payload._id));
-        console.log(response.data);
         yield call(updateStore)
     } catch (error) {
         console.error(error);
@@ -40,10 +37,8 @@ function * removeTodoSaga(action)
 function * editTodoSaga(action) 
 {
     try{
-        console.log("in the edit saga", action.payload.name);
-        const endpoint =  'https://crudcrud.com/api/d830b33c752f4f52b7520389123dbe79/tasks/';
+        const endpoint =  'https://crudcrud.com/api/708f509e6aee4ecb944e7e2c895118cd/tasks/';
         const response = yield call (axios.put,  endpoint.concat(action.payload._id), {name:action.payload.name});
-        console.log(response.data);
         yield call(updateStore)
     } catch (error) {
         console.error(error);
