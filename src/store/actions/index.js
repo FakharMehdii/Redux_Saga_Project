@@ -5,21 +5,20 @@ export const REMOVE_TODO = 'REMOVE_TODO';
 export const addTodo = (todo) => {
     return {
         type: ADD_TODO,
-        payload: todo,        
+        payload: todo 
     };
 }
 
-export const removeTodo = (index) => {
+export const removeTodo = (obj) => {
     return {
         type: REMOVE_TODO,
-        payload: index,        
+        payload: obj,        
     };
 }
 
-export const editTodo = (index, value) => {
-    console.log("in the action, index is: ", index);
+export const editTodo = (element) => {
     return {
         type: EDIT_TODO,
-        payload: {index, value},   
+        payload: element,   
     };
 }
