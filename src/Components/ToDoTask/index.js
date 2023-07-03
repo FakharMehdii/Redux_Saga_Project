@@ -5,6 +5,7 @@ export function ToDoTask ({element, index, editTodo, removeTodo}) {
   const [edit, setEdit] = useState(false)
   const [inputValue, setInputValue] = useState('');
   const [indexToBeEdited, setIndexToBeEdited] = useState();  
+  const [taskName, setTaskName] = useState('');
   
   const handleEdit = (index) => {
     setIndexToBeEdited(index);
@@ -12,15 +13,16 @@ export function ToDoTask ({element, index, editTodo, removeTodo}) {
   }
 
   const handleEditChange = (event)  => {
-    element.name= event.target.value
+    setTaskName(event.target.value)
     setInputValue(event.target.value);
   }
 
   const handleEditKeyPress = (event)  => {
     if(event.key === 'Enter' && inputValue!=="")
     {
+      const updatedElement = {...element, name: taskName}
       setEdit(false);
-      editTodo(element);
+      editTodo(updatedElement);
     }
   }
 

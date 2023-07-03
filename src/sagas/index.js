@@ -1,14 +1,12 @@
 import axios from "axios";
-import { takeEvery, call, all, takeLatest, put } from 'redux-saga/effects';
+import { takeEvery, call, all, put } from 'redux-saga/effects';
+import { addTodoInStore } from "../store/actions";
 
 function* createTodoSaga(action) {
   try {
-    let response = yield call(axios.post, 'https://crudcrud.com/api/708f509e6aee4ecb944e7e2c895118cd/tasks', {name:action.payload}, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    yield call(updateStore)
+      let endpointUrl = process.env.REACT_APP_ENDPOINT_URL;
+      let response = yield call(axios.post, endpointUrl,  {name:action.payload}, {});
+      yield call(updateStore)
   } catch (error) {
     console.error(error);
   }
@@ -16,8 +14,9 @@ function* createTodoSaga(action) {
 
 function* updateStore () {
     try{
-        const response = yield call(axios.get, 'https://crudcrud.com/api/708f509e6aee4ecb944e7e2c895118cd/tasks')
-    yield put({type: 'ADD_TODO_STORE', payload:response.data})
+        let endpointUrl = process.env.REACT_APP_ENDPOINT_URL;
+        const response = yield call(axios.get, endpointUrl)
+        yield put(addTodoInStore(response.data))
     } catch (error) {
         console.error(error);
     }
@@ -26,8 +25,9 @@ function* updateStore () {
 function * removeTodoSaga(action)
 {
     try{
-        const endpoint =  'https://crudcrud.com/api/708f509e6aee4ecb944e7e2c895118cd/tasks/';
-        const response = yield call (axios.delete,  endpoint.concat(action.payload._id));
+        let endpointUrl = process.env.REACT_APP_ENDPOINT_URL;
+        endpointUrl = endpointUrl + '/' + action.payload._id;
+        const response = yield call (axios.delete, endpointUrl );
         yield call(updateStore)
     } catch (error) {
         console.error(error);
@@ -37,8 +37,9 @@ function * removeTodoSaga(action)
 function * editTodoSaga(action) 
 {
     try{
-        const endpoint =  'https://crudcrud.com/api/708f509e6aee4ecb944e7e2c895118cd/tasks/';
-        const response = yield call (axios.put,  endpoint.concat(action.payload._id), {name:action.payload.name});
+        let endpointUrl = process.env.REACT_APP_ENDPOINT_URL;
+        endpointUrl = endpointUrl + '/' + action.payload._id;
+        const response = yield call (axios.put,endpointUrl  , {name:action.payload.name});
         yield call(updateStore)
     } catch (error) {
         console.error(error);

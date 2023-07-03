@@ -7,7 +7,7 @@ export const ToDoList = ({tasks}) => {
           <h2 className='heading'>My Todo</h2>
           <InputFieldContainer />
           <hr></hr>
-          {tasks.map((element, index,) => <ToDoTaskContainer element={element} index={index} /> ) }                      
+          {tasks && tasks.map((element, index,) => <ToDoTaskContainer element={element} index={index} /> )  }                  
       </div>
     );
 }
