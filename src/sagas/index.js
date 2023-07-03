@@ -4,7 +4,7 @@ import { addTodoInStore } from "../store/actions";
 
 function* createTodoSaga(action) {
   try {
-      let endpointUrl = process.env.REACT_APP_ENDPOINT_URL;
+      let endpointUrl = process.env.REACT_APP_CRUD_ENDPOINT_URL;
       let response = yield call(axios.post, endpointUrl,  {name:action.payload}, {});
       yield call(updateStore)
   } catch (error) {
@@ -14,7 +14,7 @@ function* createTodoSaga(action) {
 
 function* updateStore () {
     try{
-        let endpointUrl = process.env.REACT_APP_ENDPOINT_URL;
+        let endpointUrl = process.env.REACT_APP_CRUD_ENDPOINT_URL;
         const response = yield call(axios.get, endpointUrl)
         yield put(addTodoInStore(response.data))
     } catch (error) {
@@ -25,7 +25,7 @@ function* updateStore () {
 function * removeTodoSaga(action)
 {
     try{
-        let endpointUrl = process.env.REACT_APP_ENDPOINT_URL;
+        let endpointUrl = process.env.REACT_APP_CRUD_ENDPOINT_URL;
         endpointUrl = endpointUrl + '/' + action.payload._id;
         const response = yield call (axios.delete, endpointUrl );
         yield call(updateStore)
@@ -37,7 +37,7 @@ function * removeTodoSaga(action)
 function * editTodoSaga(action) 
 {
     try{
-        let endpointUrl = process.env.REACT_APP_ENDPOINT_URL;
+        let endpointUrl = process.env.REACT_APP_CRUD_ENDPOINT_URL;
         endpointUrl = endpointUrl + '/' + action.payload._id;
         const response = yield call (axios.put,endpointUrl  , {name:action.payload.name});
         yield call(updateStore)
