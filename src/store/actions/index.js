@@ -3,6 +3,7 @@ export const EDIT_TODO = 'EDIT_TODO';
 export const REMOVE_TODO = 'REMOVE_TODO';
 export const ADD_TODO_STORE = 'ADD_TODO_STORE';
 
+
 export const addTodo = (todo) => {
     return {
         type: ADD_TODO,
@@ -16,7 +17,6 @@ export const addTodoInStore = (todo) => {
         payload: todo,
     };
 }
-
 
 export const removeTodo = (obj) => {
     return {

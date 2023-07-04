@@ -4,8 +4,8 @@ import { addTodoInStore } from "../store/actions";
 
 function* createTodoSaga(action) {
   try {
-      let endpointUrl = process.env.REACT_APP_CRUD_ENDPOINT_URL;
-      let response = yield call(axios.post, endpointUrl,  {name:action.payload}, {});
+      const crudUrl = process.env.REACT_APP_CRUD_ENDPOINT_URL;
+      const response = yield call(axios.post, crudUrl,  {name:action.payload}, {});
       yield call(updateStore)
   } catch (error) {
     console.error(error);
@@ -14,8 +14,8 @@ function* createTodoSaga(action) {
 
 function* updateStore () {
     try{
-        let endpointUrl = process.env.REACT_APP_CRUD_ENDPOINT_URL;
-        const response = yield call(axios.get, endpointUrl)
+        const crudUrl = process.env.REACT_APP_CRUD_ENDPOINT_URL;
+        const response = yield call(axios.get, crudUrl)
         yield put(addTodoInStore(response.data))
     } catch (error) {
         console.error(error);
@@ -25,9 +25,9 @@ function* updateStore () {
 function * removeTodoSaga(action)
 {
     try{
-        let endpointUrl = process.env.REACT_APP_CRUD_ENDPOINT_URL;
-        endpointUrl = endpointUrl + '/' + action.payload._id;
-        const response = yield call (axios.delete, endpointUrl );
+        let crudUrl = process.env.REACT_APP_CRUD_ENDPOINT_URL;
+        crudUrl = crudUrl + '/' + action.payload._id;
+        const response = yield call (axios.delete, crudUrl );
         yield call(updateStore)
     } catch (error) {
         console.error(error);
@@ -37,9 +37,9 @@ function * removeTodoSaga(action)
 function * editTodoSaga(action) 
 {
     try{
-        let endpointUrl = process.env.REACT_APP_CRUD_ENDPOINT_URL;
-        endpointUrl = endpointUrl + '/' + action.payload._id;
-        const response = yield call (axios.put,endpointUrl  , {name:action.payload.name});
+        let crudUrl = process.env.REACT_APP_CRUD_ENDPOINT_URL;
+        crudUrl = crudUrl + '/' + action.payload._id;
+        const response = yield call (axios.put,crudUrl  , {name:action.payload.name});
         yield call(updateStore)
     } catch (error) {
         console.error(error);
