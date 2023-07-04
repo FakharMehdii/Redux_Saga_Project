@@ -10,33 +10,32 @@ const initialState = {
 const list = (state = initialState, action) => {
     
     switch (action.type) {
-        case ADD_TODO:
-        {   
+        case 'ADD_TODO_STORE':
+        {
             return {
-                tasks: [...state.tasks, action.payload],
+                ...state,
+                tasks: action.payload,
             };
-
         }
         case REMOVE_TODO:
         {
-            const updatedTasks = state.tasks.filter((task, index) => index !== action.payload);
+            // const updatedTasks = state.tasks.filter((task, index) =>  task.id !==action.payload.id);
 
-            return {
-                ...state,
-                tasks: updatedTasks,
-            };
+            // return {
+            //     ...state,
+            //     tasks: updatedTasks,
+            // };
         }
         case EDIT_TODO:
         {
-            const {index, value} = action.payload;
-            const updatedTasks= [...state.tasks];
-            updatedTasks[index] = value;
-            console.log(index, value);
-            
-            return {
-                ...state,
-                tasks: updatedTasks,
-            };
+            // const updatedTasks= [...state.tasks];
+            // updatedTasks.forEach(task => {
+            //     if(task.id === action.payload.id) task.name=action.payload.name
+            // })            
+            // return {
+            //     ...state,
+            //     tasks: updatedTasks,
+            // };
 
         }
         default:

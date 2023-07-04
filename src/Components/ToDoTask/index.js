@@ -5,6 +5,7 @@ export function ToDoTask ({element, index, editTodo, removeTodo}) {
   const [edit, setEdit] = useState(false)
   const [inputValue, setInputValue] = useState('');
   const [indexToBeEdited, setIndexToBeEdited] = useState();  
+  const [taskName, setTaskName] = useState('');
   
   const handleEdit = (index) => {
     setIndexToBeEdited(index);
@@ -12,27 +13,28 @@ export function ToDoTask ({element, index, editTodo, removeTodo}) {
   }
 
   const handleEditChange = (event)  => {
-    element= event.target.value
+    setTaskName(event.target.value)
     setInputValue(event.target.value);
   }
 
   const handleEditKeyPress = (event)  => {
     if(event.key === 'Enter' && inputValue!=="")
     {
+      const updatedElement = {...element, name: taskName}
       setEdit(false);
-      editTodo(indexToBeEdited, inputValue);
+      editTodo(updatedElement);
     }
   }
 
   return(
     <div className='todoTask'>
       {
-          edit ? <div>  <input   className="checkbox" type='text' value={inputValue ?  inputValue : element} onChange={handleEditChange} onKeyDown={handleEditKeyPress} autoFocus /></div>  
-          : <div> <input    type='checkbox' onChange={(event) => {event.target.checked ? setDone(true) : setDone(false)}} /> <span className= {done? 'strike':'normal'} >{inputValue===''? element : inputValue}</span> </div> 
+          edit ? <div>  <input   className="checkbox" type='text' value={inputValue ?  inputValue : element.name} onChange={handleEditChange} onKeyDown={handleEditKeyPress} autoFocus /></div>  
+          : <div> <input    type='checkbox' onChange={(event) => {event.target.checked ? setDone(true) : setDone(false)}} /> <span className= {done? 'strike':'normal'} >{inputValue===''? element.name : inputValue}</span> </div> 
       }
       <div>
-        <i id='edit'   className='fa fa-edit edit buttons' onClick={() => handleEdit(index)}></i>
-        <i id='delete'  className='fa-solid fa-trash-can buttons' onClick={ () => {removeTodo(index)} }></i>
+        <i id='edit'   className='fa fa-edit edit buttons' onClick={() => handleEdit(element)}></i>
+        <i id='delete'  className='fa-solid fa-trash-can buttons' onClick={ () => {removeTodo(element)} }></i>
       </div>    
     </div>
     );

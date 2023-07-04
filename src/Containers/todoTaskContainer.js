@@ -7,11 +7,11 @@ const ToDoTaskContainer = ({element, index}) => {
 
     const dispatch = useDispatch();
 
-    const editTodoHandler = (index, value) => {
-        dispatch(editTodo(index, value));
+    const editTodoHandler = (element) => {
+        dispatch(editTodo(element));
     }
-    const removeTodoHandler = (index) => {
-        dispatch(removeTodo(index));
+    const removeTodoHandler = (obj) => {
+        dispatch(removeTodo(obj));
     }
     
     return <ToDoTask element={element} index={index}  editTodo={editTodoHandler} removeTodo={removeTodoHandler} />
